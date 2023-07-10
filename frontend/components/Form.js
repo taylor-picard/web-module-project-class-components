@@ -3,7 +3,7 @@ import React from 'react'
 export default class Form extends React.Component {
   render() {
     return (
-      <div>
+      <form>
         <label>Add Todo: 
           <input 
             type='text' 
@@ -12,8 +12,8 @@ export default class Form extends React.Component {
           />
         </label>
         <button type='submit' onClick={this.props.handleSubmit}>Add Todo</button>
-        <button>Clear Completed</button>
-      </div>
+        <button onClick={this.props.handleClear}>Clear Completed</button>
+      </form>
     )
   }
 }

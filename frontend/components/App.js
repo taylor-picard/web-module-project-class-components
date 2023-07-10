@@ -1,6 +1,5 @@
 import React from 'react';
 import Form from './Form';
-import Todo from './Todo';
 import TodoList from './TodoList';
 
 export default class App extends React.Component {
@@ -10,7 +9,7 @@ export default class App extends React.Component {
       todos: [
         {
           name: 'Laundry',
-          id: Date.now(),
+          id: Date.now()+3,
           completed: false
         },
         {
@@ -32,9 +31,28 @@ export default class App extends React.Component {
   }
 
   handleSubmit = (e) => {
-    this.setState({todo : e.target.value});
+    e.preventDefault();
+
+    const newTodo = {
+      name: '',
+      id: Date.now(),
+      completed: false
+    }
+
+    this.setState({
+      ...this.state,
+      todo : [...this.state.todos, newTodo]
+    });
   }
 
+  handleClear = () => {
+    this.setState({
+      ...this.state,
+      todos: this.state.todos.filter(todo => {
+        return (todo.completed === false);
+      })
+    })
+  }
 
   render() {
     const {todos} = this.state;
@@ -42,16 +60,10 @@ export default class App extends React.Component {
     return (
       <div>
         <h1>Todos</h1>
-        <ul>
-          {
-            todos.map(todo => {
-              return (<li key={todo.id}>{todo.name} {todo.completed?<span>✅</span> : <span></span>}</li>)
-            })
-          }
-        </ul>
-        <TodoList />
-        <Form handleChange={this.handleChange} handleSubmit={this.handleSubmit}/>
-        <Todo />
+        
+        <TodoList todos={todos}/>
+        <Form handleChange={this.handleChange} handleSubmit={this.handleSubmit} handleClear={this.handleClear}/>
+        
       </div>
     )
   }
