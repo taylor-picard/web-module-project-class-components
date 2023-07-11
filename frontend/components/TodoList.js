@@ -9,7 +9,7 @@ export default class TodoList extends React.Component {
           {
             this.props.todos.map(todo => {
               // eslint-disable-next-line react/jsx-key
-              return (<Todo todo={todo}/>)
+              return (<Todo key={todo.id} todo={todo} handleToggle={this.props.handleToggle}/>)
             })
           }
         </ul>
